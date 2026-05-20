@@ -1,0 +1,7 @@
+# Secrets and environments
+.env
+.env.local
+*.log
+
+# Ignore viva prep guide so it stays local and never gets pushed to GitHub
+docs/viva_prep_guide.md

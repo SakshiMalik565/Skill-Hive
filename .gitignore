@@ -1,0 +1,24 @@
+# Root .gitignore for Skill-Hive Monorepo
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+*.log
+npm-debug.log*
+coverage/
+.cache/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Keep viva guide private - local only
+devops/docs/viva_prep_guide.md
+
+# Build artifacts
+frontend/dist/

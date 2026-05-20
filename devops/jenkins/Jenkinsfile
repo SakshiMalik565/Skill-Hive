@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
+        DOCKER_USER             = 'sakshimalik565'
+        APP_DIR                 = '/home/ubuntu/skillhive-devops'
+    }
+
+    stages {
+        stage('Checkout DevOps Configurations') {
+            steps {
+                echo 'Checking out devops repository...'
+                checkout scm
+            }
+        }
+
+        stage('Pull Latest Images') {
+            steps {
+                echo 'Logging in to DockerHub...'
+                withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER_VAR', passwordVariable: 'DOCKER_PASS_VAR')]) {
+                    sh "docker login -u ${DOCKER_USER_VAR} -p ${DOCKER_PASS_VAR}"
+                }
+                echo 'Pulling newest images from DockerHub...'
+                sh "docker compose pull"
+            }
+        }
+
+        stage('Run Deployment') {
+            steps {
+                echo 'Running deployment script...'
+                // Run deployment script which brings up new containers and checks health
+                sh "chmod +x ./scripts/deploy.sh"
+                sh "./scripts/deploy.sh"
+            }
+            post {
+                failure {
+                    echo 'Deployment failed! Running rollback script...'
+                    sh "chmod +x ./scripts/rollback.sh"
+                    sh "./scripts/rollback.sh"
+                }
+            }
+        }
+
+        stage('Clean System') {
+            steps {
+                echo 'Pruning unused system Docker assets...'
+                sh 'docker image prune -f'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'CI/CD pipeline execution complete.'
+        }
+        success {
+            echo 'Deployment completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs and rollback status.'
+        }
+    }
+}

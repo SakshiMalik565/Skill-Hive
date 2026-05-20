@@ -1,0 +1,38 @@
+const assetService = require('../services/assetService');
+
+const getAssets = async (req, res, next) => {
+  try {
+    const result = await assetService.getAssets(req.user._id, req.query);
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyAssets = async (req, res, next) => {
+  try {
+    const result = await assetService.getMyAssets(req.user._id, req.query);
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const createAsset = async (req, res, next) => {
+  try {
+    const asset = await assetService.createAsset(req.user._id, req.body, req.files);
+    res.status(201).json({ success: true, data: { asset } });
+  } catch (error) {
+    next(error);
+  }
+};
+const deleteAsset = async (req, res, next) => {
+  try {
+    await assetService.deleteAsset(req.user._id, req.params.id);
+    res.status(200).json({ success: true, message: 'Asset deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAssets, getMyAssets, createAsset, deleteAsset };
