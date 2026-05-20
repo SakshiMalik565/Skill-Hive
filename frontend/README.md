@@ -64,3 +64,5 @@ This repository includes a GitHub Actions pipeline (`.github/workflows/ci.yml`) 
 3. Builds static assets (`npm run build`).
 4. Compiles the container image using the multi-stage Dockerfile.
 5. Pushes the image to **DockerHub** using secure workflow credentials.
+
+<!-- CI triggered: 2026-05-21 02:37:07 -->
