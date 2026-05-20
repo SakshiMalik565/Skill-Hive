@@ -23,7 +23,7 @@ pipeline {
                     usernameVariable: 'DOCKER_USER_VAR',
                     passwordVariable: 'DOCKER_PASS_VAR'
                 )]) {
-                    sh '''
+                    bat '''
                     echo $DOCKER_PASS_VAR | docker login -u $DOCKER_USER_VAR --password-stdin
                     '''
                 }
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Build Images') {
             steps {
-                sh '''
+                bat '''
                 docker build -t skillhive-backend ./backend
                 docker build -t skillhive-frontend ./frontend
                 '''
@@ -41,7 +41,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
+                bat '''
                 docker compose down || docker-compose down || true
                 docker compose up -d --build || docker-compose up -d --build
                 '''
@@ -50,7 +50,7 @@ pipeline {
 
         stage('Cleanup') {
             steps {
-                sh 'docker image prune -f'
+                bat 'docker image prune -f'
             }
         }
     }
