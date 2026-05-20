@@ -5,5 +5,4 @@ npm-debug.log
 .git
 .github
 Dockerfile
-nginx.conf
 .dockerignore
