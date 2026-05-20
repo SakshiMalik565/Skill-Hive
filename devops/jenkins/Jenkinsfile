@@ -10,28 +10,40 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/SakshiMalik565/SkillHive.git'
+                git branch: 'main',
+                    url: 'https://github.com/SakshiMalik565/SkillHive.git',
+                    credentialsId: 'github-pat'
             }
         }
 
         stage('Docker Login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID,
-                    usernameVariable: 'USER',
-                    passwordVariable: 'PASS')]) {
-
+                withCredentials([usernamePassword(
+                    credentialsId: env.DOCKERHUB_CREDENTIALS_ID,
+                    usernameVariable: 'DOCKER_USER_VAR',
+                    passwordVariable: 'DOCKER_PASS_VAR'
+                )]) {
                     sh '''
-                    echo $PASS | docker login -u $USER --password-stdin
+                    echo $DOCKER_PASS_VAR | docker login -u $DOCKER_USER_VAR --password-stdin
                     '''
                 }
+            }
+        }
+
+        stage('Build Images') {
+            steps {
+                sh '''
+                docker build -t skillhive-backend ./backend
+                docker build -t skillhive-frontend ./frontend
+                '''
             }
         }
 
         stage('Deploy') {
             steps {
                 sh '''
-                docker-compose down || true
-                docker-compose up -d --build
+                docker compose down || docker-compose down || true
+                docker compose up -d --build || docker-compose up -d --build
                 '''
             }
         }
@@ -40,6 +52,15 @@ pipeline {
             steps {
                 sh 'docker image prune -f'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment Successful!'
+        }
+        failure {
+            echo '❌ Pipeline Failed - Check logs'
         }
     }
 }
