@@ -50,7 +50,7 @@ export default function Dashboard() {
               <h1 className="page-title">
                 Welcome back, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
               </h1>
-              <p className="page-subtitle">Here's an overview of your skill swaps</p>
+              <p className="page-subtitle">Here's an overview of your skill swaps!!!</p>
             </div>
             <div className="dashboard-actions">
               <Link to="/create-swap">
