@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiSend, FiSearch, FiPlus, FiCheck, FiCheckCircle, FiMessageSquare, FiX, FiPaperclip } from 'react-icons/fi';
 import AnimatedPage from '../components/AnimatedPage';
 import Button from '../components/Button';
@@ -33,6 +33,7 @@ const getInitials = (value) => {
 export default function Inbox() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     socket,
     isConnected,
@@ -78,14 +79,43 @@ export default function Inbox() {
       try {
         setIsLoading(true);
         const res = await chatService.getConversations();
-        setConversations(res.data.data.conversations || []);
+        const convs = res.data.data.conversations || [];
+        setConversations(convs);
+
+        const targetId = location.state?.recipientId;
+        const targetEmail = location.state?.recipientEmail;
+
+        if (targetId || targetEmail) {
+          const existing = convs.find(
+            (c) =>
+              c.participant?._id === targetId ||
+              c.participant?.email?.toLowerCase() === targetEmail?.toLowerCase()
+          );
+
+          if (existing) {
+            setActiveConversationId(existing._id);
+          } else {
+            try {
+              setIsCreating(true);
+              const payload = targetId ? { recipientId: targetId } : { recipientEmail: targetEmail };
+              const chatRes = await chatService.createConversation(payload);
+              const newConv = chatRes.data.data.conversation;
+              setConversations((prev) => [newConv, ...prev]);
+              setActiveConversationId(newConv._id);
+            } catch (err) {
+              toast.error(err?.message || 'Unable to start a chat');
+            } finally {
+              setIsCreating(false);
+            }
+          }
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     loadConversations();
-  }, []);
+  }, [location.state]);
 
   useEffect(() => {
     if (!activeConversationId) return;
@@ -252,7 +282,7 @@ export default function Inbox() {
     const trimmed = draft.trim();
     setDraft('');
 
-    // Stop typing indicator when sending
+    
     if (activeConversation?.participant?._id) {
       emitTypingStop(activeConversation.participant._id, activeConversation._id);
     }

@@ -27,7 +27,7 @@
   margin-bottom: 0;
 }
 
-/* ── Header Action Icons ── */
+
 .feed-header-actions {
   display: flex;
   gap: 6px;
@@ -75,7 +75,7 @@
   border-color: var(--coral);
 }
 
-/* ── Inline Search / Filter Bar ── */
+
 .feed-inline-bar {
   display: flex;
   align-items: center;
@@ -126,7 +126,7 @@
   background: var(--teal-dark);
 }
 
-/* ── Post Asset Card ── */
+
 .feed-post-card {
   margin-bottom: 16px;
   padding: 20px 24px;
@@ -183,7 +183,7 @@
   color: var(--teal-dark);
 }
 
-/* ── Assets Grid ── */
+
 .feed-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -215,7 +215,7 @@
   font-size: 14px;
 }
 
-/* ── Pagination ── */
+
 .feed-pagination {
   display: flex;
   justify-content: center;
@@ -257,7 +257,7 @@
   cursor: not-allowed;
 }
 
-/* ── Asset Detail Modal ── */
+
 .asset-modal-overlay {
   position: fixed;
   inset: 0;
@@ -357,7 +357,7 @@
   gap: 10px;
 }
 
-/* ── Responsive ── */
+
 @media (max-width: 900px) {
   .feed-filters {
     grid-template-columns: 1fr;

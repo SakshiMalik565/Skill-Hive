@@ -64,12 +64,12 @@ export default function Feed() {
 
   useEffect(() => {
     loadAssets(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   useEffect(() => {
     loadAssets(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [params.page, params.search, params.skill]);
 
   const handleSearchSubmit = (event) => {
@@ -298,7 +298,7 @@ export default function Feed() {
           </div>
         </div>
 
-        {/* Asset Detail Modal */}
+        {}
         {selectedAsset && (
           <div className="asset-modal-overlay" onClick={() => setSelectedAsset(null)}>
             <motion.div

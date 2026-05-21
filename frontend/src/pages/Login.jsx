@@ -43,7 +43,7 @@ export default function Login() {
         <AnimatedBackground variant="swap" />
 
         <div className="auth-container auth-container-centered">
-          {/* Left panel */}
+          {}
           <motion.div
             className="auth-panel-left"
             initial={{ opacity: 0, x: -40 }}
@@ -63,7 +63,7 @@ export default function Login() {
             </div>
           </motion.div>
 
-          {/* Right panel - Form */}
+          {}
           <motion.div
             className="auth-panel-right"
             initial={{ opacity: 0, x: 40 }}

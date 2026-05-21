@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiEdit2, FiSave, FiX, FiPlus, FiStar, FiMail, FiUser, FiGrid, FiClock } from 'react-icons/fi';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import AnimatedPage from '../components/AnimatedPage';
 import Button from '../components/Button';
 import SkillTag from '../components/SkillTag';
@@ -27,7 +27,8 @@ const SKILL_SUGGESTIONS = [
 export default function Profile() {
   const { user, updateProfile, applyUserUpdate } = useAuth();
   const { id } = useParams();
-  const { getUserSwaps } = useSwaps();
+  const navigate = useNavigate();
+  const { getUserSwaps, fetchSwaps } = useSwaps();
   const [isEditing, setIsEditing] = useState(false);
   const [profileTab, setProfileTab] = useState('about');
   const [loading, setLoading] = useState(false);
@@ -126,6 +127,16 @@ export default function Profile() {
   }, [id, isOwner]);
 
   useEffect(() => {
+    fetchSwaps();
+  }, [fetchSwaps]);
+
+  const hasSwapHistory = useMemo(() => {
+    if (isOwner || !viewedUser?._id) return false;
+    const userSwaps = getUserSwaps(viewedUser._id).all || [];
+    return userSwaps.some((s) => ['pending', 'accepted', 'completed'].includes(s.status));
+  }, [isOwner, viewedUser, getUserSwaps]);
+
+  useEffect(() => {
     const loadAssets = async () => {
       if (!isOwner) return;
       try {
@@ -174,7 +185,7 @@ export default function Profile() {
     <AnimatedPage>
       <section className="profile-page">
         <div className="container">
-          {/* Profile Header Card */}
+          {}
           <motion.div
             className="profile-hero-card"
             initial={{ opacity: 0, y: 20 }}
@@ -243,6 +254,21 @@ export default function Profile() {
                   <Button variant="secondary" onClick={handleEdit} icon={<FiEdit2 />}>
                     Edit Profile
                   </Button>
+                ) : !isOwner && hasSwapHistory ? (
+                  <Button
+                    variant="teal"
+                    onClick={() =>
+                      navigate('/inbox', {
+                        state: {
+                          recipientId: viewedUser._id,
+                          recipientEmail: viewedUser.email,
+                        },
+                      })
+                    }
+                    icon={<FiMail />}
+                  >
+                    Message
+                  </Button>
                 ) : null}
               </div>
 
@@ -271,7 +297,7 @@ export default function Profile() {
             </div>
           </motion.div>
 
-          {/* Profile Tabs */}
+          {}
           <div className="profile-tabs">
             <button
               className={`profile-tab ${profileTab === 'about' ? 'active' : ''}`}
@@ -296,7 +322,7 @@ export default function Profile() {
           </div>
 
           <AnimatePresence mode="wait">
-            {/* About & Skills Tab */}
+            {}
             {profileTab === 'about' && (
               <motion.div
                 key="about"
@@ -415,7 +441,7 @@ export default function Profile() {
               </motion.div>
             )}
 
-            {/* My Assets Tab */}
+            {}
             {profileTab === 'assets' && isOwner && (
               <motion.div
                 key="assets"
@@ -439,7 +465,7 @@ export default function Profile() {
               </motion.div>
             )}
 
-            {/* Swap History Tab */}
+            {}
             {profileTab === 'history' && (
               <motion.div
                 key="history"

@@ -90,7 +90,7 @@ export default function Landing() {
 
   return (
     <AnimatedPage>
-      {/* ===== HERO ===== */}
+      {}
       <section className="hero-section relative isolate py-24 sm:py-28" ref={heroRef}>
         <AnimatedBackground variant="hero" />
         <motion.div
@@ -137,7 +137,7 @@ export default function Landing() {
 
           </motion.div>
 
-          {/* Hero Illustration */}
+          {}
           <motion.div
             className="hero-illustration relative"
             initial={{ opacity: 0, x: 60, scale: 0.9 }}
@@ -185,7 +185,7 @@ export default function Landing() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {}
         <motion.div
           className="scroll-indicator"
           animate={{ y: [0, 8, 0] }}
@@ -197,7 +197,7 @@ export default function Landing() {
         </motion.div>
       </section>
 
-      {/* ===== FEATURES ===== */}
+      {}
       <section className="features-section relative py-24 sm:py-28">
         <div className="container">
           <SectionTitle
@@ -225,7 +225,7 @@ export default function Landing() {
                 </div>
                 <h3>{f.title}</h3>
                 <p>{f.desc}</p>
-                {/* Shimmer line */}
+                {}
                 <div className="feature-shimmer" />
               </motion.div>
             ))}
@@ -233,7 +233,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== HOW IT WORKS ===== */}
+      {}
       <section className="steps-section relative py-24 sm:py-28">
         <AnimatedBackground variant="minimal" />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -265,7 +265,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
+      {}
       <section className="cta-section relative py-20 sm:py-24">
         <div className="container">
           <motion.div

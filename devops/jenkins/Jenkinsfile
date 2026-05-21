@@ -23,34 +23,64 @@ pipeline {
                     usernameVariable: 'DOCKER_USER_VAR',
                     passwordVariable: 'DOCKER_PASS_VAR'
                 )]) {
-                    bat '''
-                    echo $DOCKER_PASS_VAR | docker login -u $DOCKER_USER_VAR --password-stdin
-                    '''
+                    script {
+                        if (isUnix()) {
+                            sh 'echo "${DOCKER_PASS_VAR}" | docker login -u "${DOCKER_USER_VAR}" --password-stdin'
+                        } else {
+                            bat 'echo %DOCKER_PASS_VAR% | docker login -u %DOCKER_USER_VAR% --password-stdin'
+                        }
+                    }
                 }
             }
         }
 
         stage('Build Images') {
             steps {
-                bat '''
-                docker build -t skillhive-backend ./backend
-                docker build -t skillhive-frontend ./frontend
-                '''
+                script {
+                    if (isUnix()) {
+                        sh '''
+                        docker build -t skillhive-backend ./backend
+                        docker build -t skillhive-frontend ./frontend
+                        '''
+                    } else {
+                        bat '''
+                        docker build -t skillhive-backend ./backend
+                        docker build -t skillhive-frontend ./frontend
+                        '''
+                    }
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                bat '''
-                docker compose down || docker-compose down || true
-                docker compose up -d --build || docker-compose up -d --build
-                '''
+                script {
+                    if (isUnix()) {
+                        sh '''
+                        cd devops
+                        docker compose down || docker-compose down || true
+                        docker compose up -d --build || docker-compose up -d --build
+                        '''
+                    } else {
+                        bat '''
+                        cd devops
+                        docker compose down || docker-compose down || true
+                        docker compose up -d --build || docker-compose up -d --build
+                        '''
+                    }
+                }
             }
         }
 
         stage('Cleanup') {
             steps {
-                bat 'docker image prune -f'
+                script {
+                    if (isUnix()) {
+                        sh 'docker image prune -f'
+                    } else {
+                        bat 'docker image prune -f'
+                    }
+                }
             }
         }
     }

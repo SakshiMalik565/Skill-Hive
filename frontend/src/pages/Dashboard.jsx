@@ -40,7 +40,7 @@ export default function Dashboard() {
     <AnimatedPage>
       <section className="dashboard-page">
         <div className="container">
-          {/* Header */}
+          {}
           <motion.div
             className="dashboard-header"
             initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ export default function Dashboard() {
             </div>
           </motion.div>
 
-          {/* Stat Cards */}
+          {}
           <div className="dashboard-stats">
             {statCards.map((stat, i) => (
               <motion.div
@@ -83,7 +83,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          {/* Tabs */}
+          {}
           <div className="dashboard-tabs">
             {tabs.map((tab) => (
               <button
@@ -100,7 +100,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          {/* Swap List */}
+          {}
           <div className="dashboard-swaps">
             {isLoading ? (
               <LoadingSpinner text="Loading your swaps..." />

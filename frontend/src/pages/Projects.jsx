@@ -41,12 +41,12 @@ export default function Projects() {
 
   useEffect(() => {
     loadProjects(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   useEffect(() => {
     loadProjects(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [params.page, params.search]);
 
   const handleSearch = (event) => {

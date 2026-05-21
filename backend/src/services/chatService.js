@@ -10,7 +10,7 @@ const {
 
 const hasAcceptedSwap = async (userId, otherUserId) => {
   const swap = await Swap.findOne({
-    status: { $in: ['accepted', 'completed'] },
+    status: { $in: ['pending', 'accepted', 'completed'] },
     $or: [
       { requester: userId, receiver: otherUserId },
       { requester: otherUserId, receiver: userId },
@@ -23,7 +23,7 @@ const hasAcceptedSwap = async (userId, otherUserId) => {
 const ensureCanMessage = async (userId, otherUserId) => {
   const allowed = await hasAcceptedSwap(userId, otherUserId);
   if (!allowed) {
-    throw new ApiError(403, 'Messaging allowed only for accepted swaps');
+    throw new ApiError(403, 'Messaging allowed only for swap participants with pending, accepted or completed requests');
   }
 };
 
@@ -40,7 +40,7 @@ const getConversations = async (userId) => {
     .filter(Boolean);
 
   const swaps = await Swap.find({
-    status: { $in: ['accepted', 'completed'] },
+    status: { $in: ['pending', 'accepted', 'completed'] },
     $or: [
       { requester: userId, receiver: { $in: otherIds } },
       { receiver: userId, requester: { $in: otherIds } },

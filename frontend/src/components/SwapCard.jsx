@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiArrowRight, FiCalendar, FiClock } from 'react-icons/fi';
+import { FiArrowRight, FiCalendar, FiClock, FiMessageSquare } from 'react-icons/fi';
 import { HiOutlineSwitchHorizontal } from 'react-icons/hi';
 import { getStatusColor, getInitials, getAvatarGradient, timeAgo, formatDate } from '../utils/helpers';
 import StarRating from './StarRating';
@@ -13,6 +13,7 @@ export default function SwapCard({ swap, index = 0, currentUserId }) {
   const isRequester = swap.requester._id === currentUserId;
   const otherUser = isRequester ? swap.receiver : swap.requester;
   const { deleteSwap } = useSwaps();
+  const navigate = useNavigate();
 
   const canDelete = isRequester && swap.status === 'pending';
 
@@ -92,6 +93,32 @@ export default function SwapCard({ swap, index = 0, currentUserId }) {
             {canDelete && (
               <button type="button" className="swap-card-delete" onClick={handleDelete}>
                 Delete
+              </button>
+            )}
+            {(swap.status === 'pending' || swap.status === 'accepted' || swap.status === 'completed') && (
+              <button
+                type="button"
+                className="swap-card-message-btn"
+                onClick={() => navigate('/inbox', {
+                  state: {
+                    recipientId: otherUser._id,
+                    recipientEmail: otherUser.email,
+                  }
+                })}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--teal)',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  marginRight: '12px'
+                }}
+              >
+                <FiMessageSquare /> Chat
               </button>
             )}
             <Link to={`/swap/${swap._id}`} className="swap-card-link">

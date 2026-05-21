@@ -23,13 +23,13 @@ export default function Register() {
   const [verifyLoading, setVerifyLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
-  // Step 1 form: name, email, otp
+  
   const { values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue } = useForm(
     { name: '', email: '', otp: '' },
     validateRegister
   );
 
-  // Step 2 form: password, confirmPassword
+  
   const {
     values: pwdValues,
     errors: pwdErrors,
@@ -123,7 +123,7 @@ export default function Register() {
         <AnimatedBackground variant="swap" />
 
         <div className="auth-container auth-container-centered">
-          {/* Left panel */}
+          {}
           <motion.div
             className="auth-panel-left auth-panel-left-register"
             initial={{ opacity: 0, x: -40 }}
@@ -141,7 +141,7 @@ export default function Register() {
             </div>
           </motion.div>
 
-          {/* Right panel - Form */}
+          {}
           <motion.div
             className="auth-panel-right"
             initial={{ opacity: 0, x: 40 }}
@@ -155,7 +155,7 @@ export default function Register() {
               </div>
 
               {!otpVerified ? (
-                /* Step 1: Name, Email, OTP */
+                
                 <div className="auth-form">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
@@ -250,7 +250,7 @@ export default function Register() {
                   )}
                 </div>
               ) : (
-                /* Step 2: Password (shown only after OTP is verified) */
+                
                 <form onSubmit={pwdHandleSubmit(onSubmit)} className="auth-form">
                   <motion.div
                     className="otp-verified-badge"

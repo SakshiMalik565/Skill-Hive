@@ -24,7 +24,7 @@ export default function Navbar() {
       const convos = res.data.data.conversations || [];
       const count = convos.reduce((sum, c) => sum + (c.unreadCount || 0), 0);
       setTotalUnread(count);
-    } catch { /* ignore */ }
+    } catch {  }
   }, [isAuthenticated]);
 
   useEffect(() => {

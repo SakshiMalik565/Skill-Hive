@@ -14,7 +14,7 @@ export default function ForgotPassword() {
   const { forgotPassword, resetPassword, verifyOtp } = useAuth();
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(1); // 1: email, 2: otp, 3: new password
+  const [step, setStep] = useState(1); 
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
@@ -135,7 +135,7 @@ export default function ForgotPassword() {
         <AnimatedBackground variant="minimal" />
 
         <div className="auth-container">
-          {/* Left panel */}
+          {}
           <motion.div
             className="auth-panel-left"
             initial={{ opacity: 0, x: -40 }}
@@ -167,7 +167,7 @@ export default function ForgotPassword() {
             </div>
           </motion.div>
 
-          {/* Right panel - Form */}
+          {}
           <motion.div
             className="auth-panel-right"
             initial={{ opacity: 0, x: 40 }}

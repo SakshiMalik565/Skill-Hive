@@ -93,7 +93,7 @@ export default function SwapDetails() {
             <FiArrowLeft /> Back
           </button>
 
-          {/* Header */}
+          {}
           <motion.div
             className="swap-details-header"
             initial={{ opacity: 0, y: 20 }}
@@ -113,16 +113,16 @@ export default function SwapDetails() {
             </span>
           </motion.div>
 
-          {/* Main Content */}
+          {}
           <div className="sd-grid">
-            {/* Swap Info Card */}
+            {}
             <motion.div
               className="sd-main card"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              {/* Users */}
+              {}
               <div className="sd-users-row">
                 <div className="sd-user">
                   <div className="sd-user-avatar" style={{ background: getAvatarGradient(swap.requester._id) }}>
@@ -153,7 +153,7 @@ export default function SwapDetails() {
                 </div>
               </div>
 
-              {/* Skills */}
+              {}
               <div className="sd-skills">
                 <div className="sd-skill-box sd-skill-coral">
                   <span className="sd-skill-label">Offering</span>
@@ -166,7 +166,7 @@ export default function SwapDetails() {
                 </div>
               </div>
 
-              {/* Meta */}
+              {}
               <div className="sd-meta-grid">
                 <div className="sd-meta-item">
                   <FiCalendar />
@@ -184,7 +184,8 @@ export default function SwapDetails() {
                 </div>
               </div>
 
-              {/* Actions */}
+              {}
+              {}
               {swap.status === 'pending' && isReceiver && (
                 <div className="sd-actions">
                   <Button
@@ -203,6 +204,41 @@ export default function SwapDetails() {
                   >
                     Decline
                   </Button>
+                  <Button
+                    variant="secondary"
+                    icon={<FiMessageSquare />}
+                    onClick={() => {
+                      const otherUser = isRequester ? swap.receiver : swap.requester;
+                      navigate('/inbox', {
+                        state: {
+                          recipientId: otherUser._id,
+                          recipientEmail: otherUser.email,
+                        },
+                      });
+                    }}
+                  >
+                    Message
+                  </Button>
+                </div>
+              )}
+
+              {swap.status === 'pending' && isRequester && (
+                <div className="sd-actions">
+                  <Button
+                    variant="secondary"
+                    icon={<FiMessageSquare />}
+                    onClick={() => {
+                      const otherUser = isRequester ? swap.receiver : swap.requester;
+                      navigate('/inbox', {
+                        state: {
+                          recipientId: otherUser._id,
+                          recipientEmail: otherUser.email,
+                        },
+                      });
+                    }}
+                  >
+                    Message
+                  </Button>
                 </div>
               )}
 
@@ -216,30 +252,62 @@ export default function SwapDetails() {
                   >
                     Mark as Completed
                   </Button>
+                  <Button
+                    variant="secondary"
+                    icon={<FiMessageSquare />}
+                    onClick={() => {
+                      const otherUser = isRequester ? swap.receiver : swap.requester;
+                      navigate('/inbox', {
+                        state: {
+                          recipientId: otherUser._id,
+                          recipientEmail: otherUser.email,
+                        },
+                      });
+                    }}
+                  >
+                    Message
+                  </Button>
                 </div>
               )}
 
-              {swap.status === 'completed' && !swap.feedback && (isRequester || isReceiver) && (
-                <div className="sd-actions">
+              {swap.status === 'completed' && (isRequester || isReceiver) && (
+                <div className="sd-actions" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  {!swap.feedback && (
+                    <Button
+                      variant="teal"
+                      icon={<FiMessageSquare />}
+                      onClick={() => setShowFeedback(true)}
+                    >
+                      Leave Feedback
+                    </Button>
+                  )}
                   <Button
-                    variant="teal"
+                    variant="secondary"
                     icon={<FiMessageSquare />}
-                    onClick={() => setShowFeedback(true)}
+                    onClick={() => {
+                      const otherUser = isRequester ? swap.receiver : swap.requester;
+                      navigate('/inbox', {
+                        state: {
+                          recipientId: otherUser._id,
+                          recipientEmail: otherUser.email,
+                        },
+                      });
+                    }}
                   >
-                    Leave Feedback
+                    Message
                   </Button>
                 </div>
               )}
             </motion.div>
 
-            {/* Sidebar */}
+            {}
             <motion.div
               className="sd-sidebar"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              {/* Feedback */}
+              {}
               {swap.feedback && (
                 <div className="card sd-feedback-card">
                   <h3><FiMessageSquare /> Feedback</h3>
@@ -273,7 +341,7 @@ export default function SwapDetails() {
                 </motion.div>
               )}
 
-              {/* Status Timeline */}
+              {}
               <div className="card sd-timeline-card">
                 <h3>Status Timeline</h3>
                 <div className="sd-timeline">

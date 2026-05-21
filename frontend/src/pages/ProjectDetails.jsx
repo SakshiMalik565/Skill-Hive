@@ -41,7 +41,7 @@ export default function ProjectDetails() {
 
   useEffect(() => {
     loadProject();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [id]);
 
   if (isLoading) {

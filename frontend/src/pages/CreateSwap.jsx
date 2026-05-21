@@ -152,7 +152,7 @@ export default function CreateSwap() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
           >
-            {/* Select User */}
+            {}
             <div className="form-group">
               <label className="form-label"><FiUser /> Swap With</label>
               <div className="user-search-fields">
@@ -185,7 +185,7 @@ export default function CreateSwap() {
               <p className="form-hint">Search by name, email, or skills offered.</p>
             </div>
 
-            {/* Selected User Preview */}
+            {}
             {selectedUser && (
               <motion.div
                 className="selected-user-preview"
@@ -252,7 +252,7 @@ export default function CreateSwap() {
               </div>
             )}
 
-            {/* Skills Row */}
+            {}
             <div className="form-row">
               <div className="form-group">
                 <label className="form-label">Skill You'll Teach</label>

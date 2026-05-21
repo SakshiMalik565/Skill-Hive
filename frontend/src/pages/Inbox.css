@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-/* ── Sidebar ── */
+
 .inbox-sidebar {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -116,7 +116,7 @@
 
 
 
-/* ── Conversation List ── */
+
 .conversation-list {
   display: flex;
   flex-direction: column;
@@ -237,7 +237,7 @@
   flex-shrink: 0;
 }
 
-/* ── Empty States ── */
+
 .empty-conversations,
 .empty-chat {
   display: flex;
@@ -268,7 +268,7 @@
   font-size: 14px;
 }
 
-/* ── Chat Panel ── */
+
 .inbox-chat {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
@@ -364,7 +364,7 @@
   white-space: nowrap;
 }
 
-/* ── Messages ── */
+
 .chat-messages {
   flex: 1;
   padding: 20px 24px;
@@ -496,7 +496,7 @@
   background: rgba(78, 205, 196, 0.2);
 }
 
-/* ── Typing Indicator ── */
+
 .typing-indicator {
   display: flex;
   align-items: center;
@@ -537,7 +537,7 @@
   }
 }
 
-/* ── Chat input ── */
+
 .chat-input {
   display: flex;
   align-items: center;
@@ -594,7 +594,7 @@
   cursor: not-allowed;
 }
 
-/* ── Responsive ── */
+
 @media (max-width: 980px) {
   .inbox-page {
     height: auto;
