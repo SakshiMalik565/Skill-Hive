@@ -40,7 +40,8 @@ const initializeSocket = (server) => {
           ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
           : ['http://localhost:5173'];
           
-        if (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN === '*' || allowedOrigins.includes(origin)) {
+        const isVercel = origin.endsWith('.vercel.app');
+        if (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN === '*' || allowedOrigins.includes(origin) || isVercel) {
           return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
