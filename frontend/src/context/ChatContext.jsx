@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext';
 
 const ChatContext = createContext(null);
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || '/';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || window.location.origin;
 const normalizeSocketUrl = (value) => value.replace(/\/api\/?$/, '');
 
 export function ChatProvider({ children }) {
