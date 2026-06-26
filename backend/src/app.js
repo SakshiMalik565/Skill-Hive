@@ -30,6 +30,14 @@ app.use(morgan('dev'));
 
 app.use('/api', apiLimiter);
 
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'SkillHive backend is running',
+    health: '/api/health',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
